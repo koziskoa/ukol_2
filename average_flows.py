@@ -5,4 +5,5 @@ with open("priklad_vstupu.csv", encoding="utf-8") as csvfile:
     
     for row in reader:  # vytiskne soubor .csv
         print(row[:])
+#když připíšu random komentář
     
