@@ -1,13 +1,10 @@
 import csv
 import math
-with open("priklad_vstupu.csv", encoding="utf-8") as csvfile:
-     #open ("vystup.csv", encoding="utf-8") as csv_outfile:
+with open("priklad_vstupu.csv", encoding="utf-8") as csvfile,\
+     open ("vystup_7dni.csv", encoding="utf-8") as csv_outfile:
     reader = csv.reader(csvfile, delimiter =",") 
-    #writer = csv.writer(csv_outfile, delimiter = ",")
+    writer = csv.writer(csv_outfile, delimiter = ",")
     
-    #for row in reader:  # vytiskne soubor .csv
-    #    print(row)
-#když připíšu random komentář
     prumer = 0
     suma_prutoku = 0
     celkem = 0
@@ -30,17 +27,6 @@ with open("priklad_vstupu.csv", encoding="utf-8") as csvfile:
             print(f"{prumer:.4f}")
             suma_prutoku = 0
             prumer = 0
+        else:
+            print(suma_prutoku/(lines%7))
         lines += 1
-
-    '''for row in reader:
-        try:
-            prutok = float(row[5])
-            if pocet_dni % 7 !=0:
-                celkem =+ prutok
-            if pocet_dni == 7:
-                suma_prutoku == 0
-                pocet_dni == 0
-        except ValueError:
-            prutok = 0
-        finally:
-            pocet_dni =+ 1'''
