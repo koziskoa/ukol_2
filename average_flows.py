@@ -1,5 +1,4 @@
 import csv
-import math
 with open("priklad_vstupu.csv", encoding="utf-8") as csvfile,\
      open ("vystup_7dni.csv", "w", newline="", encoding="utf-8") as csv_outfile:
     reader = csv.reader(csvfile, delimiter =",") 
@@ -10,42 +9,41 @@ with open("priklad_vstupu.csv", encoding="utf-8") as csvfile,\
     lines = 1
     prutok = 0
     chyba = 0
+    tydenni = []
 
     for row in reader:
-        #lines += int(len(list(row))/6)
+        if (lines == 1):
+            tydenni = row
         print(lines)
         try:
             prutok = float(row[5])
             suma_prutoku += prutok
         except ValueError:
             chyba += 1  # když nastane špatný vtup započítá ho do proměnné chyba
-            pass        # a pokračuje dál
                   
         if lines %7==0:  # když přijde sedmý den (řádek), sečtené průtoky se zprůměrují 
             #print(suma_prutoku)
             if lines != chyba:
                 prumer = suma_prutoku/(7-chyba)
+                tydenni[5] = f"    {prumer:.4f}"
                 print(f"{prumer:.4f}")
-                writer.writerow([f"{prumer:.4f}"])                
+                writer.writerow(tydenni)                
             else:
-                print("Daný týden nemá validní data")
-                writer.writerow(["Daný týden nemá validní data"])
+                print("Daný týden nemá validní data") 
+                tydenni[5]= "    Pro daný týden nemá validní data"
+                writer.writerow(tydenni)
 
             suma_prutoku = 0        # pak se všechny proměnné vynulují, 
             prumer = 0              # aby začaly počítat znovu od dalšího týdne
             lines = 0
             chyba = 0
-        elif lines == chyba:  # řeší případy, kdy se bude počst řádků rovnat počtu chyb
-            print (f"Řádek {row} není validní, přeskakuji")
-            writer.writerow([f"Řádek {row} není validní, přeskakuji"])
-            pass
-        else: 
+        
+        elif lines != chyba: 
             prumer = suma_prutoku/(lines - chyba) #vytiskne průměr zbylých sečtených průtoků -> 
                                                    #tzn. řádky, které už nedojdou do konce týdne
+            tydenni[5]=f"    {prumer:.4f}"
         lines += 1
     if lines < 8:
         print(f"{prumer:.4f}")
-        writer.writerow([f"{prumer:.4f}"])
+        writer.writerow(tydenni)
         
-
-    #writer.writerows(zapis)
