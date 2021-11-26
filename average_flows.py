@@ -1,9 +1,9 @@
 import csv
 import math
 with open("priklad_vstupu.csv", encoding="utf-8") as csvfile,\
-     open ("vystup_7dni.csv", encoding="utf-8") as csv_outfile:
+     open ("vystup_7dni.csv", "w", newline="", encoding="utf-8") as csv_outfile:
     reader = csv.reader(csvfile, delimiter =",") 
-    writer = csv.writer(csv_outfile, delimiter = ",")
+    writer = csv.writer(csv_outfile)
     
     prumer = 0
     suma_prutoku = 0
@@ -23,14 +23,21 @@ with open("priklad_vstupu.csv", encoding="utf-8") as csvfile,\
                   
         if lines %7==0:  # když přijde sedmý den (řádek), sečtené průtoky se zprůměrují 
             #print(suma_prutoku)
-            prumer = suma_prutoku/(7-chyba)
-            print(f"{prumer:.4f}")
+            if lines != chyba:
+                prumer = suma_prutoku/(7-chyba)
+                print(f"{prumer:.4f}")
+                writer.writerow([f"{prumer:.4f}"])                
+            else:
+                print("Daný týden nemá validní data")
+                writer.writerow(["Daný týden nemá validní data"])
+
             suma_prutoku = 0        # pak se všechny proměnné vynulují, 
             prumer = 0              # aby začaly počítat znovu od dalšího týdne
             lines = 0
             chyba = 0
         elif lines == chyba:  # řeší případy, kdy se bude počst řádků rovnat počtu chyb
             print (f"Řádek {row} není validní, přeskakuji")
+            writer.writerow([f"Řádek {row} není validní, přeskakuji"])
             pass
         else: 
             prumer = suma_prutoku/(lines - chyba) #vytiskne průměr zbylých sečtených průtoků -> 
@@ -38,5 +45,7 @@ with open("priklad_vstupu.csv", encoding="utf-8") as csvfile,\
         lines += 1
     if lines < 8:
         print(f"{prumer:.4f}")
+        writer.writerow([f"{prumer:.4f}"])
+        
 
-    #writer.writerow(row)
+    #writer.writerows(zapis)
