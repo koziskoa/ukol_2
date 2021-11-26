@@ -39,3 +39,4 @@ with open("priklad_vstupu.csv", encoding="utf-8") as csvfile,\
     if lines < 8:
         print(f"{prumer:.4f}")
 
+    #writer.writerow(row)
