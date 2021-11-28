@@ -1,4 +1,4 @@
-Program počítá průměr sedmidenních (týdenních) a ročních průtoků.
+<p>Program počítá průměr sedmidenních (týdenních) a ročních průtoků.</p>
 Zajišťuje případné chyby v průtocích a informuje o tom uživatele v konzoli.
 
 Příkladem vstupu pro správné fuungování programu mohou být data, která zaznamenává ČHMÚ:
